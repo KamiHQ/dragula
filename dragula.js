@@ -249,7 +249,7 @@ function dragula (initialContainers, options) {
     } else if (o.removeOnSpill) {
       remove();
     } else {
-      cancel();
+      cancel(undefined, elementBehindCursor, { x: clientX, y: clientY } );
     }
   }
 
@@ -279,7 +279,7 @@ function dragula (initialContainers, options) {
     cleanup();
   }
 
-  function cancel (revert) {
+  function cancel (revert, elementBehindCursor, cursorPosition) {
     if (!drake.dragging) {
       return;
     }
@@ -297,7 +297,7 @@ function dragula (initialContainers, options) {
       }
     }
     if (initial || reverts) {
-      drake.emit('cancel', item, _source, _source);
+      drake.emit('cancel', item, _source, _source, elementBehindCursor, cursorPosition);
     } else {
       drake.emit('drop', item, parent, _source, _currentSibling);
     }
